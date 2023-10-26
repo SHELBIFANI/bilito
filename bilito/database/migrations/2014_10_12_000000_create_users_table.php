@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('national_code')->nullable()->unique();
             $table->string('gender')->nullable();
-            $table->string('email')->nullable()->unique();
+            $table->string('email')->nullable();
             $table->text('image')->nullable();
             $table->rememberToken();
             $table->timestamps();
