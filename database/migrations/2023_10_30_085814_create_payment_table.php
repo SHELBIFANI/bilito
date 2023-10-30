@@ -11,16 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('passengers', function (Blueprint $table) {
+        Schema::create('payment', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('lastname');
-            $table->string('gender');
-            $table->string('national_code');
-            $table->dateTime('date_of_birth');
             $table->foreignId('order_id')->constrained();
+            $table->boolean('payment_status')->default(0);
             $table->timestamps();
-            //insert mobile field
         });
     }
 
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('passengers');
+        Schema::dropIfExists('payment');
     }
 };

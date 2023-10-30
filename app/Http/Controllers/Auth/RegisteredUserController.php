@@ -20,6 +20,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): Response
     {
+        // dd($request->input());
         $request->validate([
             'mobile' => ['required', 'string', 'size:11', 'unique:users', 'iran_mobile'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],

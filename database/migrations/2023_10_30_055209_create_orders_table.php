@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('flight_id')->constrained();
-            $table->datetimes('date_of_purchase');
-            $table->boolean('status');
+            $table->datetime('date_of_purchase');
+            $table->boolean('status')->default(0);
             $table->integer('total_price');
             $table->timestamps();
         });
