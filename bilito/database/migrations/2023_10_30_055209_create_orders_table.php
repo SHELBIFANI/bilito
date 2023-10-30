@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('passengers', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('lastname');
-            $table->string('gender');
-            $table->string('national_code');
-            $table->dateTime('date_of_birth');
-            $table->foreignId('order_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('flight_id')->constrained();
+            $table->datetimes('date_of_purchase');
+            $table->boolean('status');
+            $table->integer('total_price');
             $table->timestamps();
-            //insert mobile field
         });
     }
 
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('passengers');
+        Schema::dropIfExists('orders');
     }
 };
