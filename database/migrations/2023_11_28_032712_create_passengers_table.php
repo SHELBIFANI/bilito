@@ -17,9 +17,14 @@ return new class extends Migration
             $table->string('lastname');
             $table->string('gender');
             $table->string('national_code');
-            $table->dateTime('date_of_birth');
-            $table->foreignId('order_id')->constrained();
+            $table->dateTime('birthdate');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
+        });
+
+        Schema::create('passenger_order', function (Blueprint $table) {
+            $table->foreignId('passenger_id')->constrained();
+            $table->foreignId('order_id')->constrained();
         });
     }
 

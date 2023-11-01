@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('payment', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained();
-            $table->boolean('payment_status')->default(0);
+            $table->bigInteger('total');
+            $table->string('gateway');
+            $table->string('card_number')->nullable();
+            $table->string('tracking_code');
             $table->timestamps();
         });
     }

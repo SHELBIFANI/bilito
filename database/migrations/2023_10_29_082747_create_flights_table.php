@@ -13,15 +13,14 @@ return new class extends Migration
     {
         Schema::create('flights', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('flight_date');
-            $table->time('departure');
-            $table->time('arrival');
+            $table->dateTime('departure');
+            $table->dateTime('arrival');
             $table->foreignId('airline_id')->constrained();
-            $table->foreignId('from_id')->constrained('cities');
-            $table->foreignId('to_id')->constrained('cities');
+            $table->foreignId('origin_id')->constrained('cities');
+            $table->foreignId('destination_id')->constrained('cities');
             $table->integer('capacity');
             $table->bigInteger('price');
-            $table->string('airplane');
+            $table->string('plane');
             $table->timestamps();
         });
     }
