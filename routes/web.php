@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\EditProfileController as ControllersEditProfileController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Sanctum\Sanctum;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ Route::get('/', function () {
 });
 
 
-Route::middleware('auth')->group(function(){
+Route::middleware('auth:sanctum')->group(function(){
     Route::resource('profile', ControllersEditProfileController::class)->except('index', 'create', 'store', 'show')->parameters([
         'profile' => 'user'
     ]);
