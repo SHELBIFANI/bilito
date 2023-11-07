@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\EditProfileController as ControllersEditProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return ['Laravel' => app()->version()];
+});
+
+
+Route::middleware('auth')->group(function(){
+    Route::resource('profile', ControllersEditProfileController::class)->except('index', 'create', 'store', 'show')->parameters([
+        'profile' => 'user'
+    ]);
 });
 
 require __DIR__.'/auth.php';
