@@ -25,9 +25,10 @@ class EditProfileController extends Controller
     public function update(EditProfileRequest $request)
     {
         
+        
         $request->user()->fill($request->safe()->except('image'));
 
-
+        dd($request->file());
         if ($request->hasFile('image')) {
             if ($request->user()->image) {
                 Storage::disk('public')->delete($request->user()->image);
