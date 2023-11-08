@@ -7,7 +7,7 @@ namespace Database\Seeders;
 use App\Models\City;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class NameCity extends Seeder
 {
     protected $cities = [
         ['name' => 'تهران'],
@@ -59,6 +59,8 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        foreach($this->cities as $city) { City::create($city); }
+        foreach($this->cities as $city) {
+            City::create($city);
+            }
     }
 }
