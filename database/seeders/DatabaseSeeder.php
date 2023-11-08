@@ -2,6 +2,7 @@
 
 use Database\Seeders\NameAirline;
 use Database\Seeders\NameCity;
+use Database\Seeders\Flight;
 use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder
 {
@@ -14,5 +15,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(NameAirline::class);
         $this->call(NameCity::class);
+        $this->call(Flight::class);
     }
 }
