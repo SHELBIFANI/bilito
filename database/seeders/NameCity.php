@@ -60,7 +60,8 @@ class NameCity extends Seeder
     public function run(): void
     {
         foreach($this->cities as $city) {
-            City::create($city);
-            }
+           $savedCity = City::create($city);
+           $savedCity->addMediaFromUrl('https://picsum.photos/200/300')->toMediaCollection('cities');
+        }
     }
 }
