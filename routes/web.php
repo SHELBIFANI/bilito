@@ -17,7 +17,7 @@ use Laravel\Sanctum\Sanctum;
 */
 
 Route::get('/', function () {
-    return ['Laravel' => app()->version()];
+    //pass the most popular airlines to the view 
 });
 
 
