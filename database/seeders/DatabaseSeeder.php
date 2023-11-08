@@ -1,6 +1,7 @@
 <?php
 
 use Database\Seeders\NameAirline;
+use Database\Seeders\NameCity;
 use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder
 {
