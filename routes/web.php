@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\EditProfileController as ControllersEditProfileController;
+use App\Models\Flight;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Sanctum;
 
@@ -18,6 +19,7 @@ use Laravel\Sanctum\Sanctum;
 
 Route::get('/', function () {
     //pass the most popular airlines to the view 
+    return Flight::inRandomOrder()->limit(5)->get();
 });
 
 
