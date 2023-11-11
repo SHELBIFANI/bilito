@@ -2,10 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Airline;
+use App\Models\City;
 use App\Models\Flight as ModelsFlight;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class Flight extends Seeder
 {
@@ -29,15 +32,13 @@ class Flight extends Seeder
             $date = Carbon::create(2015, 5, 28, 0, 0, 0);
             
             $Airplan = $plan[array_rand($plan)];
-            $fligh_id = rand(1, 18);
-            $city_id_origin = rand(1, 44);
-            $city_id_destination = rand(1, 44);
+            $fligh_id = Airline::inRandomOrder()->first()->id;
+
+            $city_id_origin =City::inRandomOrder()->first()->id;
+            $city_id_destination = City::where('id', '!=', $city_id_origin)->inRandomOrder()->first()->id;
+
             $capacity = rand(100, 500);
             $price = rand(500000, 5000000);
-            
-            if($city_id_origin == $city_id_destination){
-                $city_id_destination = rand(1, 44);         
-            }
 
 
             ModelsFlight::create([
