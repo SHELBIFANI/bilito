@@ -2,20 +2,11 @@
 
 
 use App\Http\Controllers\EditProfileController as ControllersEditProfileController;
+use App\Http\Controllers\FlightController;
 use App\Models\Flight;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Sanctum;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     //pass the most popular airlines to the view 
@@ -24,9 +15,11 @@ Route::get('/', function () {
 
 
 Route::middleware('auth:sanctum')->group(function(){
-    Route::resource('profile', ControllersEditProfileController::class)->except('index', 'create', 'store', 'show')->parameters([
-        'profile' => 'user'
-    ]);
+
+    Route::get('/profile/{profile}', [ControllersEditProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/{profile}', [ControllersEditProfileController::class, 'update'])->name('profile.update');
+
+    Route::post('/flight', [FlightController::class, 'show'])->name('flight.show');
 });
 
 require __DIR__.'/auth.php';
