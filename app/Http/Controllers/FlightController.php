@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\City;
+use App\Models\Flight;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class FlightController extends Controller
 {
@@ -16,32 +15,20 @@ class FlightController extends Controller
         $destination = $request->input('destination');
         $number_of_passenger = $request->input('number_of_passenger');
         
-        $city_origin = City::where('name', $origin)->first();
-        $city_destination = City::where('name', $destination)->first();
-
-        if($city_origin != $city_destination){
-
-            $result = DB::table('flights')
-                    ->where('origin_id', $city_origin->id)
-                    ->where('destination_id', $city_destination->id)
-                    ->where('capacity', '>=', $number_of_passenger)
-                    ->get();
-    
-        }else{
-            return 'There is no flight from '. $city_origin .'to' .$city_destination ;
+        if($origin == $destination){
+            return response(['massage' => 'The city of origin and destination should not be the same'], 404) ;   
         }
-
+        
+        $result = Flight::query()
+        ->where('origin_id', $origin)
+        ->where('destination_id', $destination)
+        ->where('capacity', '>=', $number_of_passenger)
+        ->get();
+        
         if($result->isEmpty()){
+            return response(['message' => 'No flights found'], 404); 
             
-            return 'There is no flight from '.$origin.' to '.$destination;
-            
-        }else{
-            
-            return $result;
-
         }
+        return $result;
     }
-
-
-
 }
