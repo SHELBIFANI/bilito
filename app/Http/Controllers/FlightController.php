@@ -19,14 +19,15 @@ class FlightController extends Controller
             return response(['massage' => 'The city of origin and destination should not be the same'], 404) ;   
         }
         
-        if($request->has('time')){
+        if($request->has('min_time')){
         $result = Flight::
         where('origin_id', $origin)
         ->where('destination_id', $destination)
         //->where('departure', 'like', "%$departure%")
         ->whereDate('departure', '=' ,$departure)
         ->where('capacity', '>=', $number_of_passenger)
-        ->whereTime('departure' , '=' , $request->input('time'))
+        ->whereTime('departure' , '>' , $request->input('min_time'))
+        ->whereTime('departure' , '<' , $request->input('max_time'))
         ->get();
         }else{
             $result = Flight::
@@ -37,8 +38,11 @@ class FlightController extends Controller
             ->where('capacity', '>=', $number_of_passenger)
             ->get();
         }
-        if($request->input('price')){
-            $result = $result->where('price', '<=', $request->input('price'));
+        if($request->input('max_price')){
+            $result = $result->where('price', '<=', $request->input('max_price'));
+        }
+        if($request->input('min_price')){
+            $result = $result->where('price', '<=', $request->input('min_price'));
         }
 
         if($result->isEmpty()){
