@@ -18,9 +18,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::get('/profile/{user}', [ControllersEditProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/{user}', [ControllersEditProfileController::class, 'update'])->name('profile.update');
-
-    Route::post('/flight', [FlightController::class, 'show'])->name('flight.show');
-    Route::post('/flight/filter', [FlightController::class, 'filter'])->name('flight.show');
 });
+Route::post('/flight', [FlightController::class, 'show'])->name('flight.show');
 
 require __DIR__.'/auth.php';

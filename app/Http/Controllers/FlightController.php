@@ -19,27 +19,26 @@ class FlightController extends Controller
             return response(['massage' => 'The city of origin and destination should not be the same'], 404) ;   
         }
         
-        $result = Flight::query()
-        ->where('origin_id', $origin)
+        if($request->has('time')){
+        $result = Flight::
+        where('origin_id', $origin)
         ->where('destination_id', $destination)
         //->where('departure', 'like', "%$departure%")
         ->whereDate('departure', '=' ,$departure)
         ->where('capacity', '>=', $number_of_passenger)
+        ->whereTime('departure' , '=' , $request->input('time'))
         ->get();
-        
+        }else{
+            $result = Flight::
+            where('origin_id', $origin)
+            ->where('destination_id', $destination)
+            //->where('departure', 'like', "%$departure%")
+            ->whereDate('departure', '=' ,$departure)
+            ->where('capacity', '>=', $number_of_passenger)
+            ->get();
+        }
         if($request->input('price')){
             $result = $result->where('price', '<=', $request->input('price'));
-        }
-
-        if($request->has('time')) {
-            $time = $request->input('time');
-            // $flights = Flight::get();
-            // foreach($flights as $flight){
-            //     $dateTime = date('H:i:s', strtotime($flight->daparture));
-            // }
-            // dd($dateTime);
-            // $result = $result->whereTime('departure', '=', '23:00:00');
-            // $result = $result->whereTime('departure', '=', '23:00:00');
         }
 
         if($result->isEmpty()){

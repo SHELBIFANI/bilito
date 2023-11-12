@@ -50,6 +50,7 @@
 /login{
     get: csrf
     post: csrf{
+        X-XSRF-TOKEN 
         mobile : input,
         password : input,
     }
@@ -68,7 +69,9 @@ profile/'user_id'{
     }
 
 }
+
 GET             /
+
 POST            /login
 POST            /register
 POST            /logout
@@ -77,4 +80,4 @@ GET             /profile/{user}
 PUT|PATCH       /profile/{user}
 GET|HEAD        /profile/{user}/edit
 
-GET             /tickets?origin='input'&destination='input'&departure='input'&passengers='input'
+// GET             /tickets?origin='input'&destination='input'&departure='input'&passengers='input'
