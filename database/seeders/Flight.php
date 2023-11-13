@@ -29,7 +29,7 @@ class Flight extends Seeder
         
         
         foreach(range(1, 120) as $index) {
-            $date = Carbon::create(2015, 5, 28, 0, 0, 0);
+            $date = Carbon::create(2023, 7, 00, 0, 0, 0);
             
             $Airplan = $plan[array_rand($plan)];
             $fligh_id = Airline::inRandomOrder()->first()->id;
