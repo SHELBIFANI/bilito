@@ -19,4 +19,14 @@ class Flight extends Model
         'price',
         'plane',
     ];
+
+    public function origin()
+    {
+        return $this->belongsTo(City::class, 'origin_id');
+    }
+
+    public function destination()
+    {
+        return $this->belongsTo(City::class, 'destination_id');
+    }
 }
