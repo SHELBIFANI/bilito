@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\ProfileController;
+use App\Models\City;
 use App\Models\Flight;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Sanctum;
@@ -10,7 +11,11 @@ use Laravel\Sanctum\Sanctum;
 
 Route::get('/', function () {
     //pass the most popular airlines to the view 
-    return Flight::inRandomOrder()->limit(5)->get();
+    $returnJson = [
+        'cities' => City::get()->map->only(['id', 'name']),
+        'flights' => Flight::with(['origin' , 'destination'])->inRandomOrder()->limit(5)->get()->map->only(['id', 'destination', 'origin', 'departure', 'arrival',]),
+    ];
+    return $returnJson;
 });
 
 
