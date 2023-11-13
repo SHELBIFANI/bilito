@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EditProfileRequest;
+use App\Http\Requests\ProfileRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -10,16 +10,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
-class EditProfileController extends Controller
+class ProfileController extends Controller
 {
-    public function edit(Request $request, User $user)
+    public function index(Request $request)
     {
-        
-        return $request->user(); 
-
+        $user = $request->user();
+        return response()->json($user); 
     }
 
-    public function update(EditProfileRequest $request)
+    public function edit(Request $request, User $user)
+    {
+        $user = $request->user();
+        return response()->json($user); 
+    }
+
+    public function update(ProfileRequest $request)
     {
         
         $request->user()->fill($request->safe()->except('image'));

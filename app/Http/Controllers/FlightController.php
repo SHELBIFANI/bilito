@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FlightResource;
 use App\Models\Flight;
 use Illuminate\Http\Request;
 
@@ -9,51 +10,45 @@ class FlightController extends Controller
 {
     public function show(Request $request)
     {
-        
         $departure = $request->input('departure');
         $origin = $request->input('origin');
         $destination = $request->input('destination');
         $number_of_passenger = $request->input('number_of_passenger');
-        
-        if($origin == $destination){
-            return response(['massage' => 'The city of origin and destination should not be the same'], 404) ;   
+
+        if ($origin == $destination) {
+            return response(['massage' => 'The city of origin and destination should not be the same'], 404);
         }
-        
-        if($request->has('min_time')){
-        $result = Flight::
-        where('origin_id', $origin)
-        ->where('destination_id', $destination)
-        //->where('departure', 'like', "%$departure%")
-        ->whereDate('departure', '=' ,$departure)
-        ->where('capacity', '>=', $number_of_passenger)
-        ->whereTime('departure' , '>' , $request->input('min_time'))
-        ->whereTime('departure' , '<' , $request->input('max_time'))
-        ->get();
-        }else{
-            $result = Flight::
-            where('origin_id', $origin)
+
+
+        // dd($request);
+        $result = Flight::query()
+            ->where('origin_id', $origin)
             ->where('destination_id', $destination)
-            //->where('departure', 'like', "%$departure%")
-            ->whereDate('departure', '=' ,$departure)
+            ->whereDate('departure', '=', $departure)
             ->where('capacity', '>=', $number_of_passenger)
+            ->when($request->input('start_price'), function ($query) use ($request) {
+                return $query->where('price', '>=', $request->input('start_price'));
+            })
+            ->when($request->input('end_price'), function ($query) use ($request) {
+                return $query->where('price', '<=', $request->input('end_price'));
+            })
+            ->when($request->input('start_time'), function ($query) use ($request) {
+                return $query->whereTime('departure', '>=', $request->input('start_time'));
+            })
+            ->when($request->input('end_time'), function ($query) use ($request) {
+                return $query->whereTime('departure', '<=', $request->input('end_time'));
+            })
+            ->when($request->input('airline_id'), function ($query) use ($request) {
+                return $query->where('airline_id', '=', $request->input('airline_id'));
+            })
             ->get();
-        }
-        if($request->input('max_price')){
-            $result = $result->where('price', '<=', $request->input('max_price'));
-        }
-        if($request->input('min_price')){
-            $result = $result->where('price', '<=', $request->input('min_price'));
+
+
+        if ($result->isEmpty()) {
+            return response(['message' => 'No flights found'], 404);
         }
 
-        if($result->isEmpty()){
-            return response(['message' => 'No flights found'], 404); 
-            
-        }
-
-        return response()->json($result);
-        //return $request
-        //create filter sorting
-        //add model Airline in this page
-        
+        return FlightResource::collection($result);
+       
     }
 }
