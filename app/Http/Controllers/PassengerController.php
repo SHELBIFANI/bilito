@@ -2,47 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePassengersRequest;
+use App\Models\Order;
+use App\Models\Passenger;
 use Illuminate\Http\Request;
 
 class PassengerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StorePassengersRequest $request)
     {
-        //
-    }
+        
+        $user_id = $request->user()->id;
+        foreach ($request->input('passengers') as $passenger) {
+            $passengers = Passenger::create([
+                'name' => $passenger['name'],
+                'lastname' => $passenger['lastname'],
+                'gender' => $passenger['gender'],
+                'national_code' => $passenger['national_code'],
+                'birthdate' => $passenger['birthdate'],
+                'user_id' => $user_id,
+            ]);
+        }
+        $order = Order::create([
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'user_id' => $user_id,
+            'flight_id' => $request->flight_id,
+            'total' => $request->total,
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        // foreach($request->input('passengers') as $passenger){
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        //     $order->passengers()->attach($passenger, ['order_id' => $order->id], ['passenger_id' => $passengers->id]);
+        // }
     }
 }

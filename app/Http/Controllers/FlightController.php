@@ -41,6 +41,13 @@ class FlightController extends Controller
             ->when($request->input('airline_id'), function ($query) use ($request) {
                 return $query->where('airline_id', '=', $request->input('airline_id'));
             })
+            ->when($request->input('sort'), function ($query) use ($request){
+                match ($request->input('sort')) {
+                    'cheapest' => $query->orderBy('price', 'asc'),
+                    'earliest' => $query->orderBy('departure', 'asc'),
+                    'expensive' => $query->orderBy('price', 'desc'),
+                };
+            })
             ->get();
 
 
@@ -51,4 +58,5 @@ class FlightController extends Controller
         return FlightResource::collection($result);
        
     }
+
 }

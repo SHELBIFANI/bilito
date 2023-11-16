@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->text('gateway_ref'); // a reference code from payment gateway to find the order that was paid for
+            $table->text('gateway_ref')->nullable(); // a reference code from payment gateway to find the order that was paid for
             $table->foreignId('user_id')->constrained();
             $table->foreignId('flight_id')->constrained();
             $table->integer('total');

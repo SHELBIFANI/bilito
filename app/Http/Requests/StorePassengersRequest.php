@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Gender;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePassengersRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class StorePassengersRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,14 @@ class StorePassengersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string',
+            'lastname' => 'required|string',
+            'national_code' => 'required|melli_code',
+            'birthdate' => 'required|date',
+            'gender' => ['required', Rule::enum(Gender::class)],
+            'user_id' => 'required|exists:users,id',
+            'phone' => 'required|iran_mobile',
+            'email' => 'required|email',
         ];
     }
 }
