@@ -13,6 +13,7 @@
         "laravel/telescope": "^4.16",
         "laravel/tinker": "^2.8",
         "mokhosh/validation": "^2.7",
+        "shetabit/payment": "^5.4",
         "spatie/laravel-medialibrary": "^10.15",
         "spatie/laravel-permission": "^6.0"
     },

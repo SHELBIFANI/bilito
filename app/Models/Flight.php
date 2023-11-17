@@ -29,4 +29,9 @@ class Flight extends Model
     {
         return $this->belongsTo(City::class, 'destination_id');
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);
+    }
 }

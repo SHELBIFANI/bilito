@@ -16,7 +16,6 @@ return new class extends Migration
             $table->text('gateway_ref')->nullable(); // a reference code from payment gateway to find the order that was paid for
             $table->foreignId('user_id')->constrained();
             $table->foreignId('flight_id')->constrained();
-            $table->integer('total');
             $table->timestamps();
         });
     }

@@ -13,13 +13,22 @@ class Order extends Model
         'geteway_ref',
         'user_id',
         'flight_id',
-        'total',
         'email',
         'phone',
     ];
 
     public function passengers()
     {
-        return $this->belongsToMany(passenger::class);
+        return $this->belongsToMany(passenger::class, 'passenger_order');
+    }
+
+    public function flight()
+    {
+        return $this->belongsTo(Flight::class);
+    }
+
+    public function getTotalAttribute()
+    {
+        return $this->passengers()->count() * $this->flight->price;
     }
 }

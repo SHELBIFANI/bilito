@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::post('flight/order', [PassengerController::class, 'store'])->name('passemger.store');
+    Route::get('Flight/order/verify', [PassengerController::class, 'verify'])->name('verify');
 });
 
 Route::post('/flight', [FlightController::class, 'show'])->name('flight.show');
