@@ -1,0 +1,13 @@
+{
+    "platform": "laravel",
+    "app": "bilito",
+    "laravel": {
+        "phpVersion": "8.2"
+    },
+    "disks": [
+        {
+            "name": "public",
+            "mountTo": "storage"
+        }
+    ]
+}

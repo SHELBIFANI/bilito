@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/profile/{user}', [ProfileController::class, 'index'])->name('profile.index');
-    Route::get('/profile/{user}', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::get('/profile/{user}', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::post('flight/order', [PassengerController::class, 'store'])->name('passemger.store');
