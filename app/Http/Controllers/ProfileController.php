@@ -12,12 +12,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    public function index(Request $request)
-    {
-        $user = $request->user();
-        return response()->json($user); 
-    }
-
     public function edit(Request $request, User $user)
     {
         $user = $request->user();

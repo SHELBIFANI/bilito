@@ -1,4 +1,6 @@
 ##Mak
+
+
 /register{
     get: csrf,
     post: csrf
@@ -23,9 +25,10 @@
                 [
                     [
                         name : db,
-                        english_name : db,
+                        lastname : db,
                         birth_date : db,
                         national_code : db,
+                        gender :
                     ]
                 ],
             ],
@@ -33,18 +36,30 @@
     ]
 };
 /profile/user_id get{
-     user_name : db,
+        user_name : db,
         mobile : db,
         gender : db,
         national_code :db,
         iamge_address :db,
 }
 /profile/"user_id"/edit get{
-     user_name : db,
+        user_name : db,
         mobile : db,
         gender : db,
         national_code db,
         iamge_address :db,
+}
+
+profile/'user_id'{
+    post:{
+    _method : put/patch
+    mobile : input,
+    national_code : input,
+    gender : input,
+    image : input_file
+    password : input
+    }
+
 }
 
 /login{
@@ -58,17 +73,7 @@
 /logout{
     post: csrf
 }
-profile/'user_id'{
-    post:{
-    _method : put/patch
-    mobile : input,
-    national_code : input,
-    gender : input,
-    image : input_file
-    password : input
-    }
 
-}
 
 GET             /
 

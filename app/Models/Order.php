@@ -31,4 +31,9 @@ class Order extends Model
     {
         return $this->passengers()->count() * $this->flight->price;
     }
+
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class, 'payments');
+    } 
 }
