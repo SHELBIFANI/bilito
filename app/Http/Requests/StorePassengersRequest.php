@@ -24,14 +24,11 @@ class StorePassengersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'lastname' => 'required|string',
-            'national_code' => 'required|melli_code',
-            'birthdate' => 'required|date',
-            'gender' => ['required', Rule::enum(Gender::class)],
-            'user_id' => 'required|exists:users,id',
-            'phone' => 'required|iran_mobile',
-            'email' => 'required|email',
+            'passengers.*.name' => 'required|string',
+            'passengers.*.lastname' => 'required|string',
+            'passengers.*.gender' => ['required', Rule::enum(Gender::class)],
+            'passengers.*.national_code' => 'required|string',
+            'passengers.*.birthdate' => 'required|date',
         ];
     }
 }

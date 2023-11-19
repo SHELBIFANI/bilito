@@ -29,6 +29,14 @@ class PassengerController extends Controller
                 'user_id' => $user_id,
             ]);
         }
+
+        $request->validate([
+            'flight_id' => 'required|exists:flights,id',
+            'user_id' => 'required|exists:users,id',
+            'phone' => 'required|iran_mobile',
+            'email' => 'required|email',
+        ]);
+        
         $order = Order::create([
             'phone' => $request->phone,
             'email' => $request->email,
