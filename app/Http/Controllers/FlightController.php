@@ -10,22 +10,15 @@ class FlightController extends Controller
 {
     public function show(Request $request)
     {
-        $departure = $request->input('departure');
-        $origin = $request->input('origin');
-        $destination = $request->input('destination');
-        $number_of_passenger = $request->input('number_of_passenger');
-
-        if ($origin == $destination) {
+        if ($request->input('origin') == $request->input('destination')) {
             return response(['massage' => 'The city of origin and destination should not be the same'], 404);
         }
 
-
-        // dd($request);
         $result = Flight::query()
-            ->where('origin_id', $origin)
-            ->where('destination_id', $destination)
-            ->whereDate('departure', '=', $departure)
-            ->where('capacity', '>=', $number_of_passenger)
+            ->where('origin_id', $request->input('origin'))
+            ->where('destination_id', $request->input('destination'))
+            ->whereDate('departure', $request->input('departure'))
+            ->where('capacity', '>=', $request->input('number_of_passenger'))
             ->when($request->input('start_price'), function ($query) use ($request) {
                 return $query->where('price', '>=', $request->input('start_price'));
             })
@@ -39,7 +32,7 @@ class FlightController extends Controller
                 return $query->whereTime('departure', '<=', $request->input('end_time'));
             })
             ->when($request->input('airline_id'), function ($query) use ($request) {
-                return $query->where('airline_id', '=', $request->input('airline_id'));
+                return $query->where('airline_id', $request->input('airline_id'));
             })
             ->when($request->input('sort'), function ($query) use ($request) {
                 match ($request->input('sort')) {
