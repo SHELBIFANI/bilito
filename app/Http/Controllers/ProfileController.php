@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,12 +16,12 @@ class ProfileController extends Controller
     public function edit(Request $request)
     {
         $user = $request->user();
-        return response()->json($user); 
+        return UserResource::make($user); 
     }
 
     public function update(ProfileRequest $request)
     {
-        
+
         $request->user()->fill($request->safe()->except('image'));
 
         if ($request->hasFile('image')) {
@@ -33,6 +34,11 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return $request->user();
+        return response()->json($request->user());
+
+    }
+    public function orders(Request $request)
+    {
+        return $request->user()->orders()->with(['passengers', 'payment'])->get();
     }
 }

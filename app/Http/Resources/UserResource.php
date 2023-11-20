@@ -20,7 +20,6 @@ class UserResource extends JsonResource
             'gender' => $this->gender,
             'national_code' => $this->national_code,
             'image' => $this->image,
-            'birthdata' => $this->birthdata,
             'mobile' => $this->mobile,
         ];
     }

@@ -22,11 +22,11 @@ class ProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometime', 'string', 'max:50'],
-            'mobile' => ['sometime', 'string', 'iran_mobile'],
-            'national_code' => ['sometime', 'string', 'melli_code'],
-            'image' => ['sometime', 'image', 'mimes:jpg', 'max:2048'],
-            'gender' => [ 'sometime', 'string'],
+            'name' => ['nullable', 'string', 'max:50'],
+            'mobile' => ['nullable', 'string', 'iran_mobile'],
+            'national_code' => ['nullable', 'string', 'melli_code'],
+            'image' => ['nullable', 'image', 'mimes:jpg', 'max:2048'],
+            'gender' => [ 'nullable', 'string'],
         ];
     }
 }

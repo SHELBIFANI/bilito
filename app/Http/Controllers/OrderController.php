@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Passenger;
 use App\Models\PassengerOrder;
 use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,15 +20,9 @@ class OrderController extends Controller
             'flight',
             'user',
             'passengers',
-            'payments',
+            'payment',
         ]);
 
         return OrderResource::make($order);
-        // return response()->json([
-        //     'order' => $order,
-        //     'flight' => $flight,
-        //     'payment' => $payment,
-        //     'passenger' => $passenger_order  ,
-        // ]);
     }
 }

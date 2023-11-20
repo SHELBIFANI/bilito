@@ -15,13 +15,12 @@ class OrderResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            
             'id' => $this->id,
             'gateway_ref' => $this->gateway_ref,
             'flight' => FlightResource::make($this->whenLoaded('flight')),
             'user' => UserResource::make($this->whenLoaded('user')),
             'passengers'=> PassengerResource::collection($this->whenLoaded('passengers')),
-            'payments' => PaymentResource::collection($this->whenLoaded('payments')),
+            'payment' => new PaymentResource($this->whenLoaded('payment')),
         ];
     }
 }

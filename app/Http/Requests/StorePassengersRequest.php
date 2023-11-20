@@ -24,7 +24,7 @@ class StorePassengersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'passengers' => 'json',
+            'passengers' => 'array',
             'passengers.*.name' => 'required|string',
             'passengers.*.lastname' => 'required|string',
             'passengers.*.gender' => ['required', Rule::enum(Gender::class)],
