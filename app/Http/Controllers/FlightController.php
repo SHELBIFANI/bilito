@@ -57,4 +57,8 @@ class FlightController extends Controller
 
         return FlightResource::collection($result);
     }
+
+    public function weekly(Request $request)
+    {
+    }
 }

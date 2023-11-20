@@ -34,4 +34,6 @@ Route::middleware('auth:sanctum')->group(function(){
 
 Route::post('/flight', [FlightController::class, 'show'])->name('flight.show');
 
+Route::get('weekly-prices', [FlightController::class, 'weekly']);
+
 require __DIR__.'/auth.php';
