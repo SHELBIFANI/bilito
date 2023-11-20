@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\FlightResource;
 use App\Models\Flight;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class FlightController extends Controller
 {
@@ -53,5 +55,31 @@ class FlightController extends Controller
 
     public function weekly(Request $request)
     {
+        if ($request->input('origin') == $request->input('destination')) {
+            return response(['massage' => 'The city of origin and destination should not be the same'], 404);
+        }
+
+        $departure = new Carbon($request->input('departure'));
+
+        return $result = DB::table('flights')->select([
+            DB::raw("DATE_FORMAT(departure, '%Y-%m-%d') as date"),
+            DB::raw("MIN(price) as lowest_price")
+        ])
+        ->where('origin_id', $request->input('origin'))
+        ->where('destination_id', $request->input('destination'))
+        ->where('capacity', '>=', $request->input('number_of_passengers'))
+        ->havingBetween('date', [
+            $departure->startOfWeek(Carbon::SATURDAY)->format('Y-m-d'),
+            $departure->endOfWeek(Carbon::FRIDAY)->format('Y-m-d'),
+        ])
+        ->groupBy('date')
+        ->orderBy('date')
+        ->get();
+
+        if ($result->isEmpty()) {
+            return response(['message' => 'No flights found'], 404);
+        }
+
+        return FlightResource::collection($result);
     }
 }
