@@ -18,7 +18,7 @@ class FlightController extends Controller
             ->where('origin_id', $request->input('origin'))
             ->where('destination_id', $request->input('destination'))
             ->whereDate('departure', $request->input('departure'))
-            ->where('capacity', '>=', $request->input('number_of_passenger'))
+            ->where('capacity', '>=', $request->input('number_of_passengers'))
             ->when($request->input('start_price'), function ($query) use ($request) {
                 return $query->where('price', '>=', $request->input('start_price'));
             })
