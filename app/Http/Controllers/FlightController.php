@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\FlightResource;
 use App\Models\Flight;
+use Carbon\CarbonImmutable;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -59,27 +61,27 @@ class FlightController extends Controller
             return response(['massage' => 'The city of origin and destination should not be the same'], 404);
         }
 
-        $departure = new Carbon($request->input('departure'));
+        $weekStart = Carbon::parse($request->input('departure'))->startOfWeek(Carbon::SATURDAY);
+        $weekDays = collect(CarbonPeriod::create($weekStart, 7)->toArray())->map(fn ($date) => $date->format('Y-m-d'));
 
-        return $result = DB::table('flights')->select([
+        $results = DB::table('flights')->select([
             DB::raw("DATE_FORMAT(departure, '%Y-%m-%d') as date"),
             DB::raw("MIN(price) as lowest_price")
         ])
-        ->where('origin_id', $request->input('origin'))
-        ->where('destination_id', $request->input('destination'))
-        ->where('capacity', '>=', $request->input('number_of_passengers'))
-        ->havingBetween('date', [
-            $departure->startOfWeek(Carbon::SATURDAY)->format('Y-m-d'),
-            $departure->endOfWeek(Carbon::FRIDAY)->format('Y-m-d'),
-        ])
-        ->groupBy('date')
-        ->orderBy('date')
-        ->get();
+            ->where('origin_id', $request->input('origin'))
+            ->where('destination_id', $request->input('destination'))
+            ->where('capacity', '>=', $request->input('number_of_passengers'))
+            ->havingBetween('date', [
+                $weekDays->first(),
+                $weekDays->last(),
+            ])
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
 
-        if ($result->isEmpty()) {
-            return response(['message' => 'No flights found'], 404);
-        }
-
-        return FlightResource::collection($result);
+        return $weekDays->map(fn ($date) => [
+            "date" => $date,
+            "lowest_price" => $results->where('date', $date)->first()->lowest_price ?? '-',
+        ]);
     }
 }
