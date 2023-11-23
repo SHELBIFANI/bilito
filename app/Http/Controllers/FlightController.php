@@ -29,7 +29,7 @@ class FlightController extends Controller
             ->where('origin_id', $request->input('origin'))
             ->where('destination_id', $request->input('destination'))
             ->whereDate('departure', $request->input('departure'))
-            ->where('capacity', '>=', $request->input('number_of_passengers'))
+            ->where('capacity', '>=', $request->input('capacity'))
             ->when($request->input('start_price'), function ($query) use ($request) {
                 return $query->where('price', '>=', $request->input('start_price'));
             })
@@ -77,7 +77,7 @@ class FlightController extends Controller
         ])
             ->where('origin_id', $request->input('origin'))
             ->where('destination_id', $request->input('destination'))
-            ->where('capacity', '>=', $request->input('number_of_passengers'))
+            ->where('capacity', '>=', $request->input('capacity'))
             ->havingBetween('date', [
                 $weekDays->first(),
                 $weekDays->last(),
