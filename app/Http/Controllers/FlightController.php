@@ -14,6 +14,13 @@ class FlightController extends Controller
 {
     public function show(Request $request)
     {
+        $request->validate([
+            'origin_id' => 'required|integer|exists:citis,id',
+            'destination_id' => 'required|integer|exists:citis,id',
+            'departure' => 'required|date:Y-m-d',
+            'capacity' => 'required|integer',
+        ]);
+
         if ($request->input('origin') == $request->input('destination')) {
             return response(['massage' => 'The city of origin and destination should not be the same'], 404);
         }
