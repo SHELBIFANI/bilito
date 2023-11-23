@@ -15,8 +15,8 @@ class FlightController extends Controller
     public function show(Request $request)
     {
         $request->validate([
-            'origin_id' => 'required|integer|exists:cities,id',
-            'destination_id' => 'required|integer|exists:cities,id',
+            'origin' => 'required|integer|exists:cities,id',
+            'destination' => 'required|integer|exists:cities,id',
             'departure' => 'required|date:Y-m-d',
             'capacity' => 'required|integer',
         ]);
