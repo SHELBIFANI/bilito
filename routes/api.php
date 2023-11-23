@@ -6,6 +6,7 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PassengerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CityController;
 use App\Models\City;
 use App\Models\Flight;
 
@@ -32,6 +33,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('flight/order/{order}', [OrderController::class, 'show'])->name('order_show');
 });
+
+Route::get('cities', CityController::class);
 
 Route::post('/flight', [FlightController::class, 'show'])->name('flight.show');
 
