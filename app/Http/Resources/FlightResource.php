@@ -20,9 +20,9 @@ class FlightResource extends JsonResource
             'departure' => $this->departure,
             'capacity' => $this->capacity,
             'price' => $this->price,
-            'origin_id' => $this->origin,
-            'destination_id' => $this->destination,
-            'airline_id' => $this->airline,
+            'origin' => $this->origin,
+            'destination' => $this->destination,
+            'airline' => $this->airline,
         ];
     }
 }
