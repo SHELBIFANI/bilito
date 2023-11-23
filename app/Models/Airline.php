@@ -17,6 +17,15 @@ class Airline extends Model
     protected $visible = [
         'id',
         'name',
-        'image',
+        'image_url',
     ];
+
+    protected $appends = [
+        'image_url',
+    ];
+
+    public function getImageUrlAttribute()
+    {
+        return url($this->image);
+    }
 }
