@@ -1,6 +1,6 @@
 {
     "platform": "laravel",
-    "app": "bilito",
+    "app": "bilitoo",
     "laravel": {
         "phpVersion": "8.2"
     },
