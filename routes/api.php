@@ -36,7 +36,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::get('cities', CityController::class);
 
-Route::post('/flight', [FlightController::class, 'show'])->name('flight.show');
+Route::post('/flight', [FlightController::class, 'search'])->name('flight.show');
+
+Route::get('flight/{flight}', [FlightController::class, 'show']);
 
 Route::get('weekly-prices', [FlightController::class, 'weekly']);
 

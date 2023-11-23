@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class FlightController extends Controller
 {
-    public function show(FlightSearchRequest $request)
+    public function search(FlightSearchRequest $request)
     {
         if ($request->input('origin') == $request->input('destination')) {
             return response(['massage' => 'The city of origin and destination should not be the same'], 404);
@@ -82,5 +82,10 @@ class FlightController extends Controller
             "date" => $date,
             "lowest_price" => $results->where('date', $date)->first()->lowest_price ?? '-',
         ]);
+    }
+
+    public function show(Flight $flight)
+    {
+        return new FlightResource($flight);
     }
 }
