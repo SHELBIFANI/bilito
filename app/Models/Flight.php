@@ -9,7 +9,7 @@ class Flight extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 
+    protected $fillable = [
         'departure',
         'arrival',
         'airline_id',
@@ -28,6 +28,11 @@ class Flight extends Model
     public function destination()
     {
         return $this->belongsTo(City::class, 'destination_id');
+    }
+
+    public function airline()
+    {
+        return $this->belongsTo(Airline::class);
     }
 
     public function orders()

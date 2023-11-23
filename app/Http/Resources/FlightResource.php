@@ -16,13 +16,13 @@ class FlightResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'origin_id' => $this->origin_id,
-            'destination_id' => $this->destination_id,
             'arrival' => $this->arrival,
             'departure' => $this->departure,
             'capacity' => $this->capacity,
             'price' => $this->price,
-            'airline_id' => $this->airline_id,
+            'origin_id' => $this->origin,
+            'destination_id' => $this->destination,
+            'airline_id' => $this->airline,
         ];
     }
 }
