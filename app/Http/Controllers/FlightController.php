@@ -2,25 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FlightSearchRequest;
 use App\Http\Resources\FlightResource;
 use App\Models\Flight;
-use Carbon\CarbonImmutable;
 use Carbon\CarbonPeriod;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class FlightController extends Controller
 {
-    public function show(Request $request)
+    public function show(FlightSearchRequest $request)
     {
-        $request->validate([
-            'origin' => 'required|integer|exists:cities,id',
-            'destination' => 'required|integer|exists:cities,id',
-            'departure' => 'required|date:Y-m-d',
-            'capacity' => 'required|integer',
-        ]);
-
         if ($request->input('origin') == $request->input('destination')) {
             return response(['massage' => 'The city of origin and destination should not be the same'], 404);
         }
@@ -62,7 +54,7 @@ class FlightController extends Controller
         return FlightResource::collection($result);
     }
 
-    public function weekly(Request $request)
+    public function weekly(FlightSearchRequest $request)
     {
         if ($request->input('origin') == $request->input('destination')) {
             return response(['massage' => 'The city of origin and destination should not be the same'], 404);
