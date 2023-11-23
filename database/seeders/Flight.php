@@ -28,7 +28,7 @@ class Flight extends Seeder
         ];
         
         
-        foreach(range(1, 120) as $index) {
+        foreach(range(1, 12000) as $index) {
             $date = Carbon::create(2023, 7, 00, 0, 0, 0);
             
             $Airplan = $plan[array_rand($plan)];
