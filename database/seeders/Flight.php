@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class Flight extends Seeder
 {
-    
+
     public function run(): void
     {
         $plan = [
@@ -26,15 +26,15 @@ class Flight extends Seeder
             'airbus a310',
             'airbus a319',
         ];
-        
-        
-        foreach(range(1, 12000) as $index) {
-            $date = Carbon::create(2023, 7, 00, 0, 0, 0);
-            
+
+
+        foreach (range(1, 12000) as $index) {
+            $date = now();
+
             $Airplan = $plan[array_rand($plan)];
             $fligh_id = Airline::inRandomOrder()->first()->id;
 
-            $city_id_origin =City::inRandomOrder()->first()->id;
+            $city_id_origin = City::inRandomOrder()->first()->id;
             $city_id_destination = City::where('id', '!=', $city_id_origin)->inRandomOrder()->first()->id;
 
             $capacity = rand(100, 500);
@@ -42,7 +42,7 @@ class Flight extends Seeder
 
 
             ModelsFlight::create([
-                'departure'  => $date->addDays(rand(1, 30))->addHours(rand(1,24))->format('Y-m-d H:i:s'),
+                'departure'  => $date->addDays(rand(0, 10))->addHours(rand(1, 24))->format('Y-m-d H:i:s'),
                 'arrival'  => $date->addHours(rand(1, 24))->format('Y-m-d H:i:s'),
                 'airline_id' => $fligh_id,
                 'origin_id' => $city_id_origin,
@@ -51,10 +51,8 @@ class Flight extends Seeder
                 'price' =>  $price,
                 'plane' => $Airplan,
 
-                
+
             ]);
         };
-    
-    
     }
 }
