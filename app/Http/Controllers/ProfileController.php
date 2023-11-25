@@ -21,6 +21,7 @@ class ProfileController extends Controller
 
     public function update(ProfileRequest $request)
     {
+        $user = $request->user();
 
         $request->user()->fill($request->safe()->except('image'));
         
@@ -34,7 +35,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return response()->json($request->user());
+        return UserResource::make($user); 
 
     }
 
