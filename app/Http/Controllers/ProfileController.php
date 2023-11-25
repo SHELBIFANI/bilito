@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    public function edit(Request $request)
+    public function index(Request $request)
     {
         $user = $request->user();
         return UserResource::make($user); 
@@ -23,7 +23,7 @@ class ProfileController extends Controller
     {
 
         $request->user()->fill($request->safe()->except('image'));
-
+        
         if ($request->hasFile('image')) {
             if ($request->user()->image) {
                 Storage::disk('public')->delete($request->user()->image);
@@ -37,6 +37,7 @@ class ProfileController extends Controller
         return response()->json($request->user());
 
     }
+
     public function orders(Request $request)
     {
         return $request->user()->orders()->with(['passengers', 'payment'])->get();

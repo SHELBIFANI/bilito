@@ -46,6 +46,23 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected $visible = [
+        'mobile',
+        'name',
+        'national_code',
+        'image_url',
+        'gender',
+    ];
+
+    protected $appends = [
+        'image_url',
+    ];
+
+    public function getImageUrlAttribute()
+    {
+        return url('storage/' . $this->image);
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class);
