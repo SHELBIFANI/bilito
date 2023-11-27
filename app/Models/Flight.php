@@ -20,6 +20,11 @@ class Flight extends Model
         'plane',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    } 
+
     public function origin()
     {
         return $this->belongsTo(City::class, 'origin_id');
