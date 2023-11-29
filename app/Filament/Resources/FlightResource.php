@@ -16,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Morilog\Jalali\Jalalian;
 
 class FlightResource extends Resource
 {
@@ -75,17 +76,18 @@ class FlightResource extends Resource
 
     public static function table(Table $table): Table
     {
+
         return $table
             ->columns([
                 textColumn::make('id')->sortable(),
-                TextColumn::make('origin.name')->searchable(isIndividual: true),
-                TextColumn::make('destination.name')->searchable(),
-                TextColumn::make('departure')->formatStateUsing(fn (string $state): string => jdate($state)),
-                TextColumn::make('arrival')->formatStateUsing(fn (string $state): string => jdate($state)),
-                TextColumn::make('price'),
-                TextColumn::make('capacity'),
-                TextColumn::make('plane'),
-                TextColumn::make('airline.name'),
+                TextColumn::make('origin.name')->label('مبدا'),
+                TextColumn::make('destination.name')->label('مقصد')->searchable(),
+                TextColumn::make('departure')->label('تاریخ پرواز')->formatStateUsing(fn (string $state): string => jdate($state)->format('Y-m-d H:i')),
+                TextColumn::make('arrival')->label('تاریخ ورود')->formatStateUsing(fn (string $state): string => jdate($state)->format('Y-m-d H:i')),
+                TextColumn::make('price')->label('قیمت')->formatStateUsing(fn (string $state): string => number_format($state)),
+                TextColumn::make('capacity')->label('ظرفیت'),
+                TextColumn::make('plane')->label('مدل هواپیما'),
+                TextColumn::make('airline.name')->label('ایرلاین'),
             ])
             ->defaultSort('id', 'desc')
             ->filters([])
